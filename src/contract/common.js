@@ -19,19 +19,20 @@ const chainList = [
     },
 ]
 
+// {"daiContractAddr":"0xC4401D8D5F05B958e6f1b884560F649CdDfD9615","usdtContractAddr":"0x1cf98d2a2f5b0BFc365EAb6Ae1913C275bE2618F","usdcContractAddr":"0x1F0D2251f51b88FaFc90f06F7022FF8d82154B1a"}
 const addressList = [
     {
-        dai: '0x79103e2F13F46059D084C2e7fB29d9f728A82647',
-        usdt: '0xc7d96C2275bC4a69371CB5B56f0052B952AB0d66',
-        usdc: '0x2793A8337bB515b1641F507f7588B6B97e9ED6aF',
+        dai: '0xC4401D8D5F05B958e6f1b884560F649CdDfD9615',
+        usdt: '0x1cf98d2a2f5b0BFc365EAb6Ae1913C275bE2618F',
+        usdc: '0x1F0D2251f51b88FaFc90f06F7022FF8d82154B1a',
 
         ckb_chain: '',
         token_locker: '',
     },
     {
-        dai: '0x79103e2F13F46059D084C2e7fB29d9f728A82647',
-        usdt: '0xc7d96C2275bC4a69371CB5B56f0052B952AB0d66',
-        usdc: '0x2793A8337bB515b1641F507f7588B6B97e9ED6aF',
+        dai: '0xC4401D8D5F05B958e6f1b884560F649CdDfD9615',
+        usdt: '0x1cf98d2a2f5b0BFc365EAb6Ae1913C275bE2618F',
+        usdc: '0x1F0D2251f51b88FaFc90f06F7022FF8d82154B1a',
 
         ckb_chain: '',
         token_locker: '',
