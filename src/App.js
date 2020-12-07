@@ -32,7 +32,7 @@ const StyledLinkContainer = styled.div`
 `
 
 const StyleTitle = styled.div`
-    margin-top: 140px;
+    margin-top: 141px;
     padding: 0 0;
 
     font-family: Lato;
