@@ -1,206 +1,240 @@
-import React, { useState, useContext } from 'react'
+import React, {useState, useContext} from 'react'
 import styled from 'styled-components'
-import { getUserBalance, postGetTestToken } from '../contract/erc20'
+import {getUserBalance, postGetTestToken} from '../contract/erc20'
 import Card from '../components/Card'
 import CardContent from '../components/CardContent'
 import CardTitle from '../components/CardTitle'
-import { getTodayDateString } from '../utils/date'
-import { address } from '../contract/common'
-import { claimTestToken } from '../APIs/index'
+import {getTodayDateString} from '../utils/date'
+import {address} from '../contract/common'
+import {claimTestToken} from '../APIs/index'
 import 'antd/dist/antd.css'
-import { Tooltip, Input, Button, Row, Select, Label } from 'antd'
+import {Tooltip, Input, Button, Row, Select, Label} from 'antd'
 import Token from '../components/Token'
-import { ReactComponent as QuestionOutlined } from '../assets/svg/question.svg'
-import { ReactComponent as IconAlertSuccess } from '../assets/svg/icon-alert-success.svg'
-import { ReactComponent as IconAlertFail } from '../assets/svg/icon-alert-fail.svg'
+import {ReactComponent as QuestionOutlined} from '../assets/svg/question.svg'
+import {ReactComponent as IconAlertSuccess} from '../assets/svg/icon-alert-success.svg'
+import {ReactComponent as IconAlertFail} from '../assets/svg/icon-alert-fail.svg'
+import {ReactComponent as CopySVG} from '../assets/svg/copy.svg'
 
-const { Option } = Select
+const {Option} = Select
 
 const log = console.log.bind(console)
 
+const clipboard = (content) => {
+    const input = document.createElement('input')
+    input.style.opacity = '0'
+    document.body.appendChild(input)
+    input.value = content
+    input.select()
+    input.setSelectionRange(0, 99999)
+    document.execCommand('copy')
+    document.body.removeChild(input)
+}
+
 const StyledTitle = styled.div``
 const StyledDiv = styled.div`
-    // margin-top: 40px;
-    width: 100%;
+  // margin-top: 40px;
+  width: 100%;
 
-    .font-bold {
-        font-weight: bold !important;
-    }
+  .font-bold {
+    font-weight: bold !important;
+  }
 
-    .font-underscored {
-        text-decoration: underline;
-    }
+  .font-underscored {
+    text-decoration: underline;
+  }
 
-    .amount {
-        font-family: Lato;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 20px;
-        color: #000000;
-    }
+  .amount {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+  }
 
-    .amount-label {
-        font-family: Lato;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 17px;
-        color: #666666;
-    }
-
-    .ant-input-group {
-        .ant-select {
-            .ant-select-selector {
-                width: 130px;
-                height: 44px;
-                background: #ffffff;
-                border: 1px solid #e1e1e1 !important;
-                box-sizing: border-box !important;
-                border-radius: 4px !important;
-            }
+  .amount-label {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #666666;
+    button {
+      padding: 0;
+      margin-left: 5px;
+      position: relative;
+      top: 1px;
+      svg {
+        width: 14px;
+        height: 14px;
+        path {
+          fill: rgba(136, 136, 136, 1);
         }
-
-        .text {
-            font-size: 18px !important;
-            line-height: 22px !important;
-        }
-
-        .ant-select-selection-item {
-            display: flex !important;
-        }
+      }
+      &.question-btn {
+        padding-top: 3px;
+      }
     }
+  }
 
-    .div-address {
-        display: flex !important;
-        margin-top: 20px;
-        width: 100% !important;
+  .ant-input-group {
+    .ant-select {
+      .ant-select-selector {
+        width: 130px;
         height: 44px;
-        .input-address {
-            width: 450px;
-            height: 44px;
-
-            background: #f6f6f6;
-            border: 1px solid #e1e1e1;
-            box-sizing: border-box;
-            border-radius: 16px;
-        }
-
-        Button:not([disabled]) {
-            background: #5c61da;
-        }
-
-        Button {
-            width: 160px;
-            height: 44px;
-
-            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.08);
-            border-radius: 16px;
-            margin-left: 14px;
-
-            font-family: Lato;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 18px;
-            line-height: 22px;
-            /* identical to box height */
-
-            text-align: center;
-            color: #ffffff;
-        }
+        background: #ffffff;
+        border: 1px solid #e1e1e1 !important;
+        box-sizing: border-box !important;
+        border-radius: 4px !important;
+      }
     }
-    .div-hint-container {
-        width: 100%;
-        text-align: right;
-    }
-    .div-hint {
-        display: inline-block;
-        margin: 8px 0 0 0;
 
-        font-family: Lato;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 12px;
-        line-height: 14px;
-
-        color: #666666;
+    .text {
+      font-size: 18px !important;
+      line-height: 22px !important;
     }
+
+    .ant-select-selection-item {
+      display: flex !important;
+    }
+  }
+
+  .div-address {
+    display: flex !important;
+    margin-top: 20px;
+    width: 100% !important;
+    height: 44px;
+
+    .input-address {
+      width: 450px;
+      height: 44px;
+
+      background: #f6f6f6;
+      border: 1px solid #e1e1e1;
+      box-sizing: border-box;
+      border-radius: 16px;
+    }
+
+    Button:not([disabled]) {
+      background: #5c61da;
+    }
+
+    Button {
+      width: 160px;
+      height: 44px;
+
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      margin-left: 14px;
+
+      font-family: Lato;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 22px;
+      /* identical to box height */
+
+      text-align: center;
+      color: #ffffff;
+    }
+  }
+
+  .div-hint-container {
+    width: 100%;
+    text-align: right;
+  }
+
+  .div-hint {
+    display: inline-block;
+    margin: 8px 0 0 0;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #666666;
+  }
 `
 
 const StyledLabel = styled.span`
-    margin-left: 14px;
-    height: 44px;
-    div {
-        line-height: 24px;
-    }
+  margin-left: 14px;
+  height: 44px;
 
-    .ant-btn-icon-only {
-        width: 14px;
-        height: 14px;
-        border: none;
-        disabled: true;
-        margin-left: 10px;
-        top: 1px;
-    }
+  div {
+    line-height: 24px;
+  }
+
+  .ant-btn-icon-only {
+    width: 14px;
+    height: 14px;
+    border: none;
+    disabled: true;
+    margin-left: 10px;
+    top: 1px;
+  }
 `
 
 export const TokenContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 14px;
+  cursor: pointer;
+
+  .left {
+    align-items: flex-start;
+  }
+
+  .right {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 17px;
+    color: #666666;
     display: flex;
-    flex-direction: row;
-    padding: 14px;
-    cursor: pointer;
-    .left {
-        align-items: flex-start;
-    }
-    .right {
-        margin-left: auto;
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 17px;
-        color: #666666;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const StyledAlertDiv = styled.div`
-    width: 100%;
-    background: #f6f6f6;
-    border-radius: 4px;
-    margin-top: 10px;
+  width: 100%;
+  background: #f6f6f6;
+  border-radius: 4px;
+  margin-top: 10px;
 
-    & {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-    }
+  & {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+  }
 
-    .div-icon-alert {
-        width: 24px;
-        height: 24px;
+  .div-icon-alert {
+    width: 24px;
+    height: 24px;
 
-        margin: 17px 10px;
-        color: green;
-        font-color: green;
-    }
+    margin: 17px 10px;
+    color: green;
+    font-color: green;
+  }
 
-    .div-text {
-        height: 100%;
-        padding: 10px 0;
+  .div-text {
+    height: 100%;
+    padding: 10px 0;
 
-        // text
-        font-family: Lato;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 20px;
+    // text
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
 
-        color: #000000;
-    }
+    color: #000000;
+  }
 `
 
-const validClaimArgs = ({ tokenAddress, userAddress }) => {
+const validClaimArgs = ({tokenAddress, userAddress}) => {
     if (!tokenAddress || !userAddress) {
         return false
     }
@@ -212,11 +246,19 @@ const validClaimArgs = ({ tokenAddress, userAddress }) => {
     return true
 }
 
-const Faucet = ({ wallet }) => {
+const Faucet = ({wallet}) => {
     const [selectTokenName, setSelectTokenName] = useState('dai')
     const [userAddress, setUserAddress] = useState('')
-    const [claimed, setClaimed] = useState(false)
+    const [claimed, setClaimed] = useState({
+        'DAI': false,
+        'USDT': false,
+        'USDC': false,
+    })
     const [loading, setLoading] = useState(false)
+
+    const copyToClipboard = 'Copy'
+    const copied = 'Copied!'
+    const [clipboardTooltip, setClipboardTooltip] = useState(copyToClipboard)
 
     const [alert, setAlert] = useState({
         status: 0, // 0 - no alert, 1: txHash receipt, 2: can't claim, 3: invalid address
@@ -264,7 +306,11 @@ const Faucet = ({ wallet }) => {
                 tokenName: selectTokenName,
                 ...params,
             })
-            setClaimed(true)
+            setClaimed((prev) => {
+                const obj = Object.assign({}, prev)
+                obj[selectTokenName.toUpperCase()] = true
+                return obj
+            })
             setLoading(false)
         })
         return null
@@ -276,7 +322,7 @@ const Faucet = ({ wallet }) => {
         } else if (alert.status === 1) {
             return (
                 <StyledAlertDiv>
-                    <IconAlertSuccess className="div-icon-alert" />
+                    <IconAlertSuccess className="div-icon-alert"/>
                     <div className="div-text">
                         <div>
                             {`100 ${alert.tokenName.toUpperCase()} has been sent to `}
@@ -303,7 +349,7 @@ const Faucet = ({ wallet }) => {
             const nextTimeString = `2020-11-28 09:49:38 +0000`
             return (
                 <StyledAlertDiv>
-                    <IconAlertFail className="div-icon-alert" />
+                    <IconAlertFail className="div-icon-alert"/>
                     <div className="div-text">
                         <div>
                             Claim interval must be greater than{' '}
@@ -321,9 +367,9 @@ const Faucet = ({ wallet }) => {
         } else if (alert.status === 3) {
             return (
                 <StyledAlertDiv>
-                    <IconAlertFail className="div-icon-alert" />
+                    <IconAlertFail className="div-icon-alert"/>
                     <div className="div-text">
-                        <div>Invalid Address!</div>
+                        <div>Invalid Address!!</div>
                         <div>
                             <span className="font-bold">
                                 {alert.userAddress}
@@ -338,7 +384,7 @@ const Faucet = ({ wallet }) => {
     return (
         <Card className="card-faucet background">
             <StyledTitle>
-                <CardTitle text="ERC20" />
+                <CardTitle text="ERC20"/>
             </StyledTitle>
             <CardContent>
                 <StyledDiv>
@@ -349,13 +395,13 @@ const Faucet = ({ wallet }) => {
                             onChange={handleTokenSelect}
                         >
                             <Option value="DAI">
-                                <Token tokenName="DAI" className="small" />
+                                <Token tokenName="DAI" className="small"/>
                             </Option>
                             <Option value="USDT">
-                                <Token tokenName="USDT" className="small" />
+                                <Token tokenName="USDT" className="small"/>
                             </Option>
                             <Option value="USDC">
-                                <Token tokenName="USDC" className="small" />
+                                <Token tokenName="USDC" className="small"/>
                             </Option>
                         </Select>
 
@@ -366,7 +412,7 @@ const Faucet = ({ wallet }) => {
                                     <Tooltip title="You can claim 100 Dai, USDT, and USDC every day">
                                         <Button
                                             icon={
-                                                <QuestionOutlined className="question-btn" />
+                                                <QuestionOutlined className="question-btn"/>
                                             }
                                         />
                                     </Tooltip>
@@ -377,6 +423,21 @@ const Faucet = ({ wallet }) => {
                                 <span>Contract Address: </span>
                                 <span className="font-bold">
                                     {address[selectTokenName.toLowerCase()]}
+                                    <Tooltip
+                                        title={clipboardTooltip}
+                                        placement="top"
+                                        onVisibleChange={visible => visible && setClipboardTooltip(copyToClipboard)}
+                                    >
+                                    <Button
+                                        type="text"
+                                        onClick={() => {
+                                            clipboard(address[selectTokenName.toLowerCase()])
+                                            setClipboardTooltip(copied)
+                                        }}
+                                    >
+                                        <CopySVG className="full-width-and-height"/>
+                                    </Button>
+                                </Tooltip>
                                 </span>
                             </div>
                         </StyledLabel>
@@ -390,9 +451,9 @@ const Faucet = ({ wallet }) => {
                             <Button
                                 onClick={handleClaim}
                                 loading={loading}
-                                disabled={claimed}
+                                disabled={claimed[selectTokenName.toUpperCase()]}
                             >
-                                {claimed ? `Claimed` : `Claim`}
+                                {claimed[selectTokenName.toUpperCase()] ? `Claimed` : `Claim`}
                             </Button>
                         </div>
 
