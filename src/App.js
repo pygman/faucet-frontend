@@ -93,11 +93,11 @@ const WalletProvider = () => {
                             <Token tokenName="ETH" className="small ETH" />
                             <StyledLinkContainer>
                                 <a
-                                    href="https://faucet.ropsten.be/"
+                                    href="https://faucet.rinkeby.io//"
                                     target="_blank"
                                     rel="noreferrer noopener"
                                 >
-                                    Claim at Ropsten Official Faucet >>>
+                                    Claim at Rinkeby Official Faucet >>>
                                 </a>
                             </StyledLinkContainer>
                         </Container>

@@ -336,7 +336,7 @@ const Faucet = ({wallet}) => {
                                 className="font-underscored"
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                href={`https://ropsten.etherscan.io/tx/${alert.txHash}`}
+                                href={`https://rinkeby.etherscan.io/tx/${alert.txHash}`}
                             >
                                 {alert.txHash}
                             </a>

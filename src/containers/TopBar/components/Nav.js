@@ -9,7 +9,7 @@ const Nav = () => {
                 Home
             </StyledLink>
             <StyledAbsoluteLink
-                href="https://faucet.ropsten.be/"
+                href="https://faucet.rinkeby.io/"
                 target="_blank"
             >
                 Ether Faucet
