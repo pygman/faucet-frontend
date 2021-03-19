@@ -7,32 +7,32 @@ const uint256Max = `0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 const chainList = [
     {
         // yarn build => Ethereum Ropsten Testnet
-        id: 3,
-        networkName: 'Ropsten',
-        rpcUrl: 'https://ropsten.eth.aragon.network/',
+        id: 4,
+        networkName: 'Rinkeby',
+        rpcUrl: 'https://rinkeby.eth.aragon.network/',
     },
     {
         // yarn build => Ethereum Ropsten Testnet
-        id: 3,
-        networkName: 'Ropsten',
-        rpcUrl: 'https://ropsten.eth.aragon.network/',
+        id: 4,
+        networkName: 'Rinkeby',
+        rpcUrl: 'https://rinkeby.eth.aragon.network/',
     },
 ]
 
 // {"daiContractAddr":"0xC4401D8D5F05B958e6f1b884560F649CdDfD9615","usdtContractAddr":"0x1cf98d2a2f5b0BFc365EAb6Ae1913C275bE2618F","usdcContractAddr":"0x1F0D2251f51b88FaFc90f06F7022FF8d82154B1a"}
 const addressList = [
     {
-        dai: '0xC4401D8D5F05B958e6f1b884560F649CdDfD9615',
-        usdt: '0x1cf98d2a2f5b0BFc365EAb6Ae1913C275bE2618F',
-        usdc: '0x1F0D2251f51b88FaFc90f06F7022FF8d82154B1a',
+        dai: '0x7Af456bf0065aADAB2E6BEc6DaD3731899550b84',
+        usdt: '0x74a3dbd5831f45CD0F3002Bb87a59B7C15b1B5E6',
+        usdc: '0x265566D4365d80152515E800ca39424300374A83',
 
         ckb_chain: '',
         token_locker: '',
     },
     {
-        dai: '0xC4401D8D5F05B958e6f1b884560F649CdDfD9615',
-        usdt: '0x1cf98d2a2f5b0BFc365EAb6Ae1913C275bE2618F',
-        usdc: '0x1F0D2251f51b88FaFc90f06F7022FF8d82154B1a',
+        dai: '0x7Af456bf0065aADAB2E6BEc6DaD3731899550b84',
+        usdt: '0x74a3dbd5831f45CD0F3002Bb87a59B7C15b1B5E6',
+        usdc: '0x265566D4365d80152515E800ca39424300374A83',
 
         ckb_chain: '',
         token_locker: '',
