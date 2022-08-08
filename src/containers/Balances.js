@@ -32,6 +32,7 @@ const Balances = ({ wallet }) => {
     const DAIBalance = useTokenBalance('dai', account, ethereum)
     const USDTBalance = useTokenBalance('usdt', account, ethereum)
     const USDCBalance = useTokenBalance('usdc', account, ethereum)
+    const WBTCBalance = useTokenBalance('wbtc', account, ethereum)
 
     return (
         <Card>
@@ -84,6 +85,19 @@ const Balances = ({ wallet }) => {
                         value={
                             !!account
                                 ? getBalanceNumber(USDCBalance, 6)
+                                : 'Wallet Not Connected'
+                        }
+                        decimals={4}
+                    />
+                </div>
+            </CardContent>
+            <CardContent>
+                <div style={{ flex: 1 }}>
+                    <Label text="TEST WBTC" />
+                    <Value
+                        value={
+                            !!account
+                                ? getBalanceNumber(WBTCBalance, 6)
                                 : 'Wallet Not Connected'
                         }
                         decimals={4}

@@ -253,6 +253,7 @@ const Faucet = ({wallet}) => {
         'DAI': false,
         'USDT': false,
         'USDC': false,
+        'WBTC': false,
     })
     const [loading, setLoading] = useState(false)
 
@@ -403,13 +404,16 @@ const Faucet = ({wallet}) => {
                             <Option value="USDC">
                                 <Token tokenName="USDC" className="small"/>
                             </Option>
+                            <Option value="WBTC">
+                                <Token tokenName="WBTC" className="small"/>
+                            </Option>
                         </Select>
 
                         <StyledLabel>
                             <div className="amount">
                                 Amount: 100
                                 <span>
-                                    <Tooltip title="You can claim 100 Dai, USDT, and USDC every day">
+                                    <Tooltip title="You can claim 100 Dai, USDT, USDC and WBTC every day">
                                         <Button
                                             icon={
                                                 <QuestionOutlined className="question-btn"/>
