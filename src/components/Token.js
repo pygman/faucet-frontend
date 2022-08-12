@@ -1,13 +1,11 @@
 import React, { useMemo } from 'react'
-import { TOKEN_LOGOS } from '../constants/tokens'
 import styled from 'styled-components'
 
 const SHADOW_ASSET_COLOR = '#FCF0E6'
 const ETH_COLOR = '#E7EAFE'
 const CKB_COLOR = '#D9E8E2'
 
-const Token = ({ tokenName, className }) => {
-    const logo = TOKEN_LOGOS.get(tokenName)
+const Token = ({ tokenName, logo, className }) => {
     const color = useMemo(() => {
         return ETH_COLOR
     }, [tokenName])

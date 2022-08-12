@@ -78,7 +78,7 @@ const WalletProvider = () => {
                         size="md"
                     >
                         <Container size="sm" className="background">
-                            <Token tokenName="CKB" className="small CKB" />
+                            <Token tokenName="CKB" logo="https://cryptologos.cc/logos/nervos-network-ckb-logo.svg?v=002" className="small CKB" />
                             <StyledLinkContainer>
                                 <a
                                     href="https://faucet.nervos.org/"
@@ -90,7 +90,7 @@ const WalletProvider = () => {
                             </StyledLinkContainer>
                         </Container>
                         <Container size="sm" className="background">
-                            <Token tokenName="ETH" className="small ETH" />
+                            <Token tokenName="ETH" logo="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=002" className="small ETH" />
                             <StyledLinkContainer>
                                 <a
                                     href="https://faucet.rinkeby.io//"

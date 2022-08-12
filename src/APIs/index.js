@@ -10,6 +10,9 @@ export const faucetClient = axios.create({
     headers: BASE_HEADERS,
 })
 
+export const getTokens = () => {
+    return faucetClient.get(`/tokens`)
+}
 export const claimTestToken = (params) => {
     return faucetClient.post(`/api/claimTestToken`, params)
 }

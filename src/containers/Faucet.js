@@ -1,12 +1,9 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect, useMemo} from 'react'
 import styled from 'styled-components'
-import {getUserBalance, postGetTestToken} from '../contract/erc20'
 import Card from '../components/Card'
 import CardContent from '../components/CardContent'
 import CardTitle from '../components/CardTitle'
-import {getTodayDateString} from '../utils/date'
-import {address} from '../contract/common'
-import {claimTestToken} from '../APIs/index'
+import {claimTestToken, getTokens} from '../APIs/index'
 import 'antd/dist/antd.css'
 import {Tooltip, Input, Button, Row, Select, Label} from 'antd'
 import Token from '../components/Token'
@@ -247,14 +244,9 @@ const validClaimArgs = ({tokenAddress, userAddress}) => {
 }
 
 const Faucet = ({wallet}) => {
-    const [selectTokenName, setSelectTokenName] = useState('dai')
+    const [selectTokenName, setSelectTokenName] = useState('DAI')
     const [userAddress, setUserAddress] = useState('')
-    const [claimed, setClaimed] = useState({
-        'DAI': false,
-        'USDT': false,
-        'USDC': false,
-        'WBTC': false,
-    })
+    const [claimed, setClaimed] = useState({})
     const [loading, setLoading] = useState(false)
 
     const copyToClipboard = 'Copy'
@@ -268,6 +260,33 @@ const Faucet = ({wallet}) => {
         userAddress: '0xuser',
     })
 
+    const [tokens, setTokens] = useState([])
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (tokens.length === 0) {
+                getTokens().then((res) => {
+                    const allTokens = res.data
+                    if (!allTokens || !allTokens.tokens) {
+                        log(`getTokens error`, allTokens)
+                    }
+                    log(`getTokens: `, allTokens)
+                    setTokens(allTokens.tokens)
+                })
+            }
+        }, 1000)
+        return () => clearTimeout(timeout)
+    }, [tokens])
+
+    const selectedTokenAddress = useMemo(() => {
+        console.log('selectedTokenAddress')
+        const selectedToken = tokens.find((token) => token.symbol === selectTokenName)
+        if (selectedToken) {
+            return selectedToken.address
+        } else {
+            return ''
+        }
+    }, [tokens, selectTokenName])
+
     const handleTokenSelect = (value) => {
         setSelectTokenName(value)
     }
@@ -280,9 +299,8 @@ const Faucet = ({wallet}) => {
     // when user click claim button
     const handleClaim = () => {
         log('claim button click!')
-
         const params = {
-            tokenAddress: address[selectTokenName.toLowerCase()],
+            tokenAddress: selectedTokenAddress,
             userAddress: userAddress,
         }
 
@@ -395,25 +413,20 @@ const Faucet = ({wallet}) => {
                             defaultValue="DAI"
                             onChange={handleTokenSelect}
                         >
-                            <Option value="DAI">
-                                <Token tokenName="DAI" className="small"/>
-                            </Option>
-                            <Option value="USDT">
-                                <Token tokenName="USDT" className="small"/>
-                            </Option>
-                            <Option value="USDC">
-                                <Token tokenName="USDC" className="small"/>
-                            </Option>
-                            <Option value="WBTC">
-                                <Token tokenName="WBTC" className="small"/>
-                            </Option>
+                            {
+                                tokens.map((token) =>
+                                    <Option key={token.symbol} value={token.symbol}>
+                                        <Token tokenName={token.name} logo={token.logoURI} className="small"/>
+                                    </Option>
+                                )
+                            }
                         </Select>
 
                         <StyledLabel>
                             <div className="amount">
                                 Amount: 100
                                 <span>
-                                    <Tooltip title="You can claim 100 Dai, USDT, USDC and WBTC every day">
+                                    <Tooltip title="You can claim 100 test tokens every day">
                                         <Button
                                             icon={
                                                 <QuestionOutlined className="question-btn"/>
@@ -426,7 +439,7 @@ const Faucet = ({wallet}) => {
                             <div className="amount-label">
                                 <span>Contract Address: </span>
                                 <span className="font-bold">
-                                    {address[selectTokenName.toLowerCase()]}
+                                    {selectedTokenAddress}
                                     <Tooltip
                                         title={clipboardTooltip}
                                         placement="top"
@@ -435,7 +448,7 @@ const Faucet = ({wallet}) => {
                                     <Button
                                         type="text"
                                         onClick={() => {
-                                            clipboard(address[selectTokenName.toLowerCase()])
+                                            clipboard(selectedTokenAddress)
                                             setClipboardTooltip(copied)
                                         }}
                                     >
