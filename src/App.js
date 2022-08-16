@@ -90,14 +90,14 @@ const WalletProvider = () => {
                             </StyledLinkContainer>
                         </Container>
                         <Container size="sm" className="background">
-                            <Token tokenName="ETH" logo="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=002" className="small ETH" />
+                            <Token tokenName="BNB" logo="https://cryptologos.cc/logos/binance-coin-bnb-logo.svg?v=002" className="small ETH" />
                             <StyledLinkContainer>
                                 <a
-                                    href="https://faucet.rinkeby.io//"
+                                    href="https://testnet.binance.org/faucet-smart"
                                     target="_blank"
                                     rel="noreferrer noopener"
                                 >
-                                    Claim at Rinkeby Official Faucet >>>
+                                    Claim at BSC Official Faucet >>>
                                 </a>
                             </StyledLinkContainer>
                         </Container>

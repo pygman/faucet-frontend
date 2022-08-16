@@ -6,16 +6,16 @@ const uint256Max = `0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 const chainList = [
     {
-        // yarn build => Ethereum Rinkeby Testnet
-        id: 4,
-        networkName: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.eth.aragon.network/',
+        // yarn build => BSC Testnet
+        id: 97,
+        networkName: 'BSC',
+        rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
     },
     {
-        // yarn build => Ethereum Rinkeby Testnet
-        id: 4,
-        networkName: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.eth.aragon.network/',
+        // yarn build => BSC Testnet
+        id: 97,
+        networkName: 'BSC',
+        rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
     },
 ]
 

@@ -244,7 +244,7 @@ const validClaimArgs = ({tokenAddress, userAddress}) => {
 }
 
 const Faucet = ({wallet}) => {
-    const [selectTokenName, setSelectTokenName] = useState('DAI')
+    const [selectTokenName, setSelectTokenName] = useState('USDT')
     const [userAddress, setUserAddress] = useState('')
     const [claimed, setClaimed] = useState({})
     const [loading, setLoading] = useState(false)
@@ -355,7 +355,7 @@ const Faucet = ({wallet}) => {
                                 className="font-underscored"
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                href={`https://rinkeby.etherscan.io/tx/${alert.txHash}`}
+                                href={`https://bscscan.com/tx/${alert.txHash}`}
                             >
                                 {alert.txHash}
                             </a>
@@ -410,7 +410,7 @@ const Faucet = ({wallet}) => {
                     <Input.Group compact>
                         <Select
                             className="tokenSelect"
-                            defaultValue="DAI"
+                            defaultValue="USDT"
                             onChange={handleTokenSelect}
                         >
                             {
@@ -462,7 +462,7 @@ const Faucet = ({wallet}) => {
                         <div className="div-address">
                             <Input
                                 className="input-address"
-                                placeholder="Enter receiving Ethereum address here"
+                                placeholder="Enter receiving BSC address here"
                                 onChange={handleAddressChange}
                             />
                             <Button
