@@ -9,7 +9,7 @@ const Nav = () => {
                 Home
             </StyledLink>
             <StyledAbsoluteLink
-                href="https://faucet.rinkeby.io/"
+                href="https://goerlifaucet.com/"
                 target="_blank"
             >
                 Ether Faucet

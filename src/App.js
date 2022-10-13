@@ -93,11 +93,11 @@ const WalletProvider = () => {
                             <Token tokenName="ETH" logo="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=002" className="small ETH" />
                             <StyledLinkContainer>
                                 <a
-                                    href="https://faucet.rinkeby.io//"
+                                    href="https://goerlifaucet.com/"
                                     target="_blank"
                                     rel="noreferrer noopener"
                                 >
-                                    Claim at Rinkeby Official Faucet >>>
+                                    Claim at Goerli Official Faucet >>>
                                 </a>
                             </StyledLinkContainer>
                         </Container>

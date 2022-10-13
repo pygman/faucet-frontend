@@ -6,16 +6,16 @@ const uint256Max = `0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 const chainList = [
     {
-        // yarn build => Ethereum Rinkeby Testnet
-        id: 4,
-        networkName: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.eth.aragon.network/',
+        // yarn build => Ethereum Goerli Testnet
+        id: 5,
+        networkName: 'Goerli',
+        rpcUrl: 'https://goerli.infura.io/v3/',
     },
     {
-        // yarn build => Ethereum Rinkeby Testnet
-        id: 4,
-        networkName: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.eth.aragon.network/',
+        // yarn build => Ethereum Goerli Testnet
+        id: 5,
+        networkName: 'Goerli',
+        rpcUrl: 'https://goerli.infura.io/v3/',
     },
 ]
 
